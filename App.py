@@ -12,7 +12,7 @@ WIDTH, HEIGHT = 800, 600
 CELL_SIZE = 10
 MATRIX_WIDTH = WIDTH // CELL_SIZE
 MATRIX_HEIGHT = HEIGHT // CELL_SIZE
-TRAIL_LENGTH = 10  # Number of frames a character stays visible
+TRAIL_LENGTH = 20  
 MAX_TRAILS = 150
 FPS = 20
 GREEN = (0, 255, 0)
@@ -66,7 +66,7 @@ def add_trails():
     x = random.randint(0, WIDTH - 1)
     while x not in trails.xSet():
         x = random.randint(0, WIDTH - 1)
-    y = random.randint(0, HEIGHT  - 1)
+    y = random.randint(0, HEIGHT// 2)
     trails.addX(x)
 
     return ListNode(
@@ -102,8 +102,7 @@ def update_trails():
         
     for node in trails.Trails():
         if node.pos[1] > HEIGHT: #If node is greater then Height we will delete it from the linked list
-            trails.Pop(node, add_trails)
-            new = add_trails()
+            new = trails.Pop(node, add_trails)
             trails.removeX(node.pos[0])
             trails.enqueue(new)
             trails.addX(node.pos[0])
@@ -138,6 +137,7 @@ def main():
         
         screen.fill((0, 0, 0))  
         update_trails()
+        #display_grid(screen)
         pygame.display.update()
         frame += 1
         clock.tick(FPS)  # Adjust the frame rate as needed

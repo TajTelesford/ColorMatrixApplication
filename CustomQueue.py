@@ -54,7 +54,9 @@ class CustomQueue:
     def Pop(self, node, add):
         for i in range(len(self.items)):
             if self.items[i].pos == node.pos:
-                self.items[i] = add()
+                new = add()
+                self.items[i] = new
+                return new
 
     def check(self, height):
         if self.Top().pos[1] >= height and self.Top().maxed:
